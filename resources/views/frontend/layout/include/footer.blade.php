@@ -1,5 +1,5 @@
 <footer id="footer">
-    <div class="footer_top">
+   <!--  <div class="footer_top">
       <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-4">
           <div class="footer_widget wow fadeInLeftBig">
@@ -31,9 +31,9 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="footer_bottom">
-      <p class="copyright">Copyright &copy; 2045 <a href="index.html">Sun Shine</a></p>
-      <p class="developer">Developed By Wpfreeware</p>
+      <p class="copyright">Copyright &copy; 2018 <a href="/">Minh Nhật</a></p>
+      <p class="developer">Developed By Minh Nhật</p>
     </div>
   </footer>

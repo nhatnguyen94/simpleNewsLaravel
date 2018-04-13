@@ -37,6 +37,7 @@
             </ul>
           </div>
           <div class="header_top_right">
+
             <p><?php
 echo date('l jS \of F Y h:i:s A');
 ?></p>
@@ -55,17 +56,13 @@ echo date('l jS \of F Y h:i:s A');
 @yield('afterHeader')
   <section id="contentSection">
     <div class="row">
-      <div class="col-lg-8 col-md-8 col-sm-8">
+      <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="left_content">
           @yield('content')
       </div>
     </div>
-      <div class="col-lg-4 col-md-4 col-sm-4">
-          @yield('content2')
-      </div>
-    </div>
   </section>
-@include('frontend.layout.include.footer')
+  @include('frontend.layout.include.footer')
 </div>
 <script src="/assets/js/jquery.min.js"></script>
 <script src="/assets/js/wow.min.js"></script>

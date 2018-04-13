@@ -1,13 +1,10 @@
-@extends('admin.layout.master', ['title'=>"Create News"])
-@section('header')
-<script src="//cdn.ckeditor.com/4.9.0/standard/ckeditor.js"></script>
-@stop
+@extends('admin.layout.master', ['title'=>"News Tool"])
 @section('content')
-
+<script src="//cdn.ckeditor.com/4.9.1/standard/ckeditor.js"></script>
 <div class="col-lg-12">
   <div class="card">
     <div class="card-header">
-      <strong>Basic Form</strong> Elements
+      <strong>{{isset($id)?"Update":"Create"}}</strong>
     </div>
     <div class="card-body card-block">
       @if(isset($id))
@@ -23,23 +20,22 @@
               @foreach($dataCategory as $item)
                 <option value="{{$item->id}}" @if(isset($data) && $data->category_news_id == $item->id) {{"selected"}} @endif>{{$item->name}}</option>
               @endforeach
-              
+
             </select>
           </div>
         </div>
 
         <div class="row form-group">
           <div class="col col-md-3"><label for="file-input" class=" form-control-label">File input</label></div>
-          <div class="col-12 col-md-9"><input type="file" id="file-input" name="image_upload" class="form-control-file"></div>
+          <div class="col-12 col-md-9"><input type="file" id="file-input" name="image_upload" class="form-control-file upload-image"></div>
         </div>
-        @if(isset($data) && $data->image)
         <div class="row form-group">
-          <div class="col col-md-3"><label for="file-input" class=" form-control-label">Image old</label></div>
+          <div class="col col-md-3"><label for="file-input" class=" form-control-label">Image view</label></div>
           <div class="col-12 col-md-9">
-            <img src="{{ $data->image}}" width="200px">
+            <img src="{{ isset($data->image)?$data->image:''}}" id="image_show" " width="200px">
+            <input type="hidden" name="image" id="images_show_data" value="{{isset($data->image)?$data->image:''}}">
           </div>
         </div>
-        @endif
 
         <div class="row form-group">
           <div class="col col-md-3"><label for="text-input" class=" form-control-label">Title</label></div>
@@ -59,9 +55,12 @@
         </div>
 
         <div class="row form-group">
-          <div class="col col-md-3"><label for="textarea-input " class=" form-control-label">Content</label></div>
-          <div class="col-12 col-md-9"><textarea class="ckeditor" name="content" id="textarea-input editor1" rows="3" placeholder="content" class="form-control">{!! isset($data)?nl2br($data->content):'' !!}</textarea></div>
-          
+          <div class="col col-md-3"><label for="textarea-input" class=" form-control-label">Content</label></div>
+          <div class="col-12 col-md-9"><textarea name="content" id="textarea-input" rows="3" placeholder="content" class="form-control ckeditor">{!! isset($data)?nl2br($data->lead):'' !!}</textarea>
+          <script>
+          CKEDITOR.replace( 'article-ckeditor' );
+          </script>
+          </div>
         </div>
 
         <div class="row form-group">
@@ -84,8 +83,27 @@
   </div>
 </div>
 @stop
+
 @section('script')
 <script>
-          CKEDITOR.replace( 'editor1' );
-          </script>
+  $(".upload-image").change(function() {
+    var form_data = new FormData();
+        form_data.append('file', this.files[0]);
+        form_data.append('_token', '{{csrf_token()}}');
+    $.ajax({
+      url: "{{route('news.uploadimage')}}", // Url to which the request is send
+      data: form_data,
+      type: 'POST',
+      contentType: false,
+      processData: false,
+      success: function(res)   // A function to be called if request succeeds
+      {
+        dataSuccess = JSON.parse(res);
+        $('#image_show').attr('src', dataSuccess.filename);
+        $('#images_show_data').val(dataSuccess.filename);
+        $('.upload-image').val('')
+      }
+    });
+  });
+</script>
 @stop

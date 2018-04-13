@@ -9,7 +9,7 @@
         @foreach($dataSide as $item)
         <div class="single_iteam"> <a href="{{route('frontend.news',['id'=>$item->id])}}"> <img src="{{isset($item->image)?$item->image:''}}" alt=""></a>
           <div class="slider_article">
-            <h2><a class="slider_tittle" href="{{route('frontend.news',['id'=>$item->id])}}">{!! nl2br(isset($item->title)?$item->title:'') !!}</a></h2>
+            <h2><a class="slider_tittle" style="font-family: normal" href="{{route('frontend.news',['id'=>$item->id])}}">{!! nl2br(isset($item->title)?$item->title:'') !!}</a></h2>
             <p>{!! nl2br(isset($item->lead)?$item->lead:'') !!}</p>
           </div>
         </div>
